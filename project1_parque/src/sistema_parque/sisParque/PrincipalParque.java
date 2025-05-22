@@ -443,10 +443,7 @@ public class PrincipalParque {
      private void guardarCambios() {
          try {
              // Usamos la ruta predeterminada "data/parque.json"
-        	 System.out.print("Ingrese la ruta del archivo JSON para salvar los datos del parque: ");
-        	 Scanner scanner = new Scanner(System.in);
-             String rutaArchivo = scanner.nextLine();
-             salvarParque(rutaArchivo, CentralPersistencia.JSON);
+             salvarParque("data/parque.json", CentralPersistencia.JSON);
              System.out.println("Cambios guardados exitosamente en el archivo JSON");
          } catch (Exception e) {
              System.err.println("Error al guardar los cambios en el archivo JSON: " + e.getMessage());

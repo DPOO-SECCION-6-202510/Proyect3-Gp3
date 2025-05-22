@@ -12,6 +12,7 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="tests"/>
+	<classpathentry kind="src" path="Interfaz"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/felpr/OneDrive/Escritorio/gson-2.10.1.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
