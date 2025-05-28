@@ -7,6 +7,7 @@
 module project1_parque {
     requires com.google.gson;
 	requires org.junit.jupiter.api; // 
+	requires java.desktop;
     
     
     opens CONTROL_PERSISTENCIA to com.google.gson;
