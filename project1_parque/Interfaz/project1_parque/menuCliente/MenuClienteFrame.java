@@ -1,33 +1,73 @@
 package project1_parque.menuCliente;
-import sistema_parque.sisParque.PrincipalParque;
 
 import sistema_parque.sisParque.PrincipalParque;
-import sistema_parque.usuarios.Cliente;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import java.awt.Font;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MenuClienteFrame extends JFrame {
 
-	private PrincipalParque parquePrincipal;
+    private PrincipalParque parquePrincipal;
     private String nombreCliente;
-	
-	public MenuClienteFrame(String nombre, PrincipalParque parquePrincipal) {
-		this.nombreCliente = nombre;
+    private JPanel panelContenido;
+
+    public MenuClienteFrame(String nombre, PrincipalParque parquePrincipal) {
+        this.nombreCliente = nombre;
         this.parquePrincipal = parquePrincipal;
 
         setTitle("Menú Cliente - " + nombre);
         setSize(800, 600);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Al cerrar esta, cierra la app
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-		
-		// TODO Auto-generated constructor stub
-		
-	}
-	
-	
+        setLayout(new BorderLayout());
 
+        // Panel de botones
+        JPanel panelBotones = new JPanel();
+        panelBotones.setLayout(new FlowLayout());
+
+        JButton btnAtracciones = new JButton("Ver Atracciones");
+        JButton btnComprar = new JButton("Comprar Tiquetes");
+        JButton btnMisTiquetes = new JButton("Mis Tiquetes");
+
+        panelBotones.add(btnAtracciones);
+        panelBotones.add(btnComprar);
+        panelBotones.add(btnMisTiquetes);
+
+        add(panelBotones, BorderLayout.NORTH);
+
+        // Panel de contenido que cambia
+        panelContenido = new JPanel(new BorderLayout());
+        add(panelContenido, BorderLayout.CENTER);
+
+        // Acciones de botones
+        btnAtracciones.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mostrarPanel(new AtraccionesPanel(parquePrincipal));
+            }
+        });
+
+        btnComprar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mostrarPanel(new ComprarTiquetesPanel(parquePrincipal, nombreCliente));
+            }
+        });
+
+        btnMisTiquetes.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mostrarPanel(new MisTiquetesPanel(parquePrincipal, nombreCliente));
+            }
+        });
+    }
+
+    private void mostrarPanel(JPanel nuevoPanel) {
+        panelContenido.removeAll();
+        panelContenido.add(nuevoPanel, BorderLayout.CENTER);
+        panelContenido.revalidate();
+        panelContenido.repaint();
+    }
 }
