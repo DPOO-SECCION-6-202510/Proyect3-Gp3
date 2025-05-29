@@ -3,8 +3,6 @@ package sistema_parque.sisParque;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Collections; 
-
 import CONTROL_PERSISTENCIA.CentralPersistencia;
 import CONTROL_PERSISTENCIA.PersistenciaParque;
 import sistema_parque.atracciones.Atraccion;
