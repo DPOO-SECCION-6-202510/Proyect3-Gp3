@@ -20,7 +20,7 @@ public class TiqueteTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        tiquete = new Tiquete(Categoria.Diamante, false, "1");
+        tiquete = new Tiquete(Categoria.Diamante, false, "1", null);
     }
 
     @AfterEach

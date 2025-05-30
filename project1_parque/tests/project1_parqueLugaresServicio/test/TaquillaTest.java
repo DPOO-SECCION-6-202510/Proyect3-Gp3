@@ -28,7 +28,7 @@ public class TaquillaTest {
         cajero = new Cajero("TR-1001", null);
         taquilla = new Taquilla("Taquilla Principal", cajero);
         cliente = new Cliente("Ana", "ana_cliente", "pass456");
-        tiquete = new Tiquete(Categoria.Familiar, false, "TQ-001");
+        tiquete = new Tiquete(Categoria.Familiar, false, "TQ-001", null);
         empleado = new Empleado("Pedro", "pedro_emp", "pass789", "manejador caja", new ArrayList<>(), true, false);
     }
 

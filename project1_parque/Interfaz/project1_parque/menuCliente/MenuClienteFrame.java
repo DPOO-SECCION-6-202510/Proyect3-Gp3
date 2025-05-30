@@ -1,6 +1,7 @@
 package project1_parque.menuCliente;
 
 import sistema_parque.sisParque.PrincipalParque;
+import sistema_parque.usuarios.Usuario;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +14,7 @@ public class MenuClienteFrame extends JFrame {
     private String nombreCliente;
     private JPanel panelContenido;
 
-    public MenuClienteFrame(String nombre, PrincipalParque parquePrincipal) {
+    public MenuClienteFrame(String nombre, Usuario usuarioAutenticado, PrincipalParque parquePrincipal) {
         this.nombreCliente = nombre;
         this.parquePrincipal = parquePrincipal;
 
@@ -52,7 +53,7 @@ public class MenuClienteFrame extends JFrame {
         btnComprar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mostrarPanel(new ComprarTiquetesPanel(parquePrincipal, nombreCliente));
+                mostrarPanel(new ComprarTiquetesPanel(parquePrincipal, usuarioAutenticado));
             }
         });
 

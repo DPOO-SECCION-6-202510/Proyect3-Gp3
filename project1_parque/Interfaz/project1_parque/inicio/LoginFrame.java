@@ -276,7 +276,7 @@ public class LoginFrame extends JFrame { // No es necesario implements ActionLis
         } else if (usuarioAutenticado instanceof Cliente) {
             // Abre MenuClienteFrame
             // Asegúrate de que el constructor de MenuClienteFrame reciba el nombre y parquePrincipal
-            new MenuClienteFrame(usuarioAutenticado.getNombre(), parquePrincipal).setVisible(true);
+            new MenuClienteFrame(usuarioAutenticado.getNombre(), usuarioAutenticado, parquePrincipal).setVisible(true);
         } else if (usuarioAutenticado instanceof Cocinero) { // Si tienes un menú específico para Cocinero
             // Abre MenuEmpleadoFrame o un MenuCocineroFrame si lo creas
             new MenuEmpleadoFrame(usuarioAutenticado.getNombre(), parquePrincipal).setVisible(true); // O un MenuCocineroFrame

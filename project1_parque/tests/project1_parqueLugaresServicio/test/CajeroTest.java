@@ -39,7 +39,7 @@ class CajeroTest {
         empleado = new Empleado("Juan Pérez", "juan123", "1234", "Cajero", capacitaciones, true, false);
         Categoria nivel = Categoria.Familiar;
         cliente = new Cliente("Laura Gómez", "laura456", "abcd");
-        tiquete = new Tiquete(nivel, false, "TKT-001");
+        tiquete = new Tiquete(nivel, false, "TKT-001", null);
     }
 
     @Test

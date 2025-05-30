@@ -9,15 +9,17 @@ public class Tiquete {
     protected Categoria nivel; // 'protected' para acceso desde el mismo paquete y subclases
     private boolean fueUsado;
     private java.time.LocalDate fechaExpiracion;
+    private String tipoTiquete; 
 
     private Atraccion atraccion;
 
     // Constructor principal
-    public Tiquete(Categoria nivel, boolean fueUsado, String id) {
-        super();
+    public Tiquete(Categoria nivel, boolean fueUsado, String id, String tipoTiquete) {
+    	super();
         this.nivel = nivel;
         this.fueUsado = fueUsado;
         this.id = id;
+        this.tipoTiquete = tipoTiquete;
         // fechaExpiracion y atraccion permanecen null por defecto con este constructor
     }
 
@@ -27,6 +29,10 @@ public class Tiquete {
         // id, nivel, fechaExpiracion, atraccion permanecen null
     }
 
+    public String getTipo() {
+    	return tipoTiquete;
+    }
+    
     public Atraccion getAtraccion() {
         return atraccion;
     }

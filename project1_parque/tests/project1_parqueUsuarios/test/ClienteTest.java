@@ -26,7 +26,7 @@ public class ClienteTest {
     @BeforeEach
     void setUp() throws Exception {
         cliente1 = new Cliente("Felipe", "f.rojasd", "1234");
-        tiqueteF = new Tiquete(Categoria.Diamante, true, "FP001");
+        tiqueteF = new Tiquete(Categoria.Diamante, true, "FP001", null);
         System.setOut(new PrintStream(outContent));
     }
 
@@ -80,7 +80,7 @@ public class ClienteTest {
 
     @Test
     void testComprarTiquete() {
-        Tiquete tiquete1 = new FastPass(Categoria.Diamante, false, new Date(), "FP002");
+        Tiquete tiquete1 = new FastPass(Categoria.Diamante, false, new Date(), "FP002", null);
         cliente1.comprarTiquete(tiquete1);
         assertEquals(1, cliente1.getTiquetesNoUsados().size(), "Debería haber un tiquete no usado después de la compra.");
         assertTrue(cliente1.getTiquetesNoUsados().contains(tiquete1), "La lista de tiquetes no usados debería contener el tiquete comprado.");
@@ -106,7 +106,7 @@ public class ClienteTest {
     
     @Test
     void testUsarTiquete_TiqueteNoExistente() {
-        Tiquete otroTiquete = new FastPass(Categoria.Familiar, false, new Date(), "FP003");
+        Tiquete otroTiquete = new FastPass(Categoria.Familiar, false, new Date(), "FP003", null);
         boolean resultado = cliente1.usarTiquete(otroTiquete);
         assertFalse(resultado, "usarTiquete debería devolver false si el tiquete no existe en los no usados.");
         assertTrue(cliente1.getTiquetesNoUsados().isEmpty(), "La lista de no usados no debería cambiar.");
@@ -116,8 +116,8 @@ public class ClienteTest {
 
     @Test
     void testGetTiquetesNoUsados() {
-        Tiquete tiquete1 = new FastPass(Categoria.Diamante, false, new Date(), "FP002");
-        Tiquete tiquete2 = new FastPass(Categoria.Oro, true, new Date(), "FP003");
+        Tiquete tiquete1 = new FastPass(Categoria.Diamante, false, new Date(), "FP002", null);
+        Tiquete tiquete2 = new FastPass(Categoria.Oro, true, new Date(), "FP003", null);
         cliente1.comprarTiquete(tiquete1);
         cliente1.comprarTiquete(tiquete2);
         List<Tiquete> noUsados = cliente1.getTiquetesNoUsados();
@@ -154,8 +154,8 @@ public class ClienteTest {
 
     @Test
     void testMostrarTiquetes_ConTiquetes() {
-        Tiquete tiquete1 = new FastPass(Categoria.Diamante, false, new Date(), "FP002");
-        Tiquete tiqueteUsado = new FastPass(Categoria.Oro, true, new Date(), "FP003");
+        Tiquete tiquete1 = new FastPass(Categoria.Diamante, false, new Date(), "FP002", null);
+        Tiquete tiqueteUsado = new FastPass(Categoria.Oro, true, new Date(), "FP003", null);
         cliente1.comprarTiquete(tiquete1);
         cliente1.comprarTiquete(tiqueteUsado);
         cliente1.usarTiquete(tiqueteUsado);

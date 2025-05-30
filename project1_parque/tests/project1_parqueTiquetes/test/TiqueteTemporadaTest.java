@@ -15,7 +15,7 @@ public class TiqueteTemporadaTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        tiqueteTemporada = new TiqueteTemporada(Categoria.Oro, false, "Mensual", "TT001");
+        tiqueteTemporada = new TiqueteTemporada(Categoria.Oro, false, "Mensual", "TT001", null);
     }
 
     @AfterEach

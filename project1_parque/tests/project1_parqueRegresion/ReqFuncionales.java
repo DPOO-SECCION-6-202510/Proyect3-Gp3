@@ -229,15 +229,15 @@ public class ReqFuncionales {
     @Test
     void testCreacionTiquetes() {
         TiqueteIndividual individual = new TiqueteIndividual(
-            Categoria.Familiar, false, atraccionCultural, "T001"
+            Categoria.Familiar, false, atraccionCultural, "T001", null
         );
         
         TiqueteTemporada temporada = new TiqueteTemporada(
-            Categoria.Oro, false, "Verano", "T002"
+            Categoria.Oro, false, "Verano", "T002", null
         );
         
         FastPass fastPass = new FastPass(
-            Categoria.Diamante, false, new Date(), "FP001"
+            Categoria.Diamante, false, new Date(), "FP001", null
         );
         
         assertNotNull(individual);
@@ -251,7 +251,7 @@ public class ReqFuncionales {
     @Test
     void testUsoTiquete() {
         TiqueteIndividual tiquete = new TiqueteIndividual(
-            Categoria.Familiar, false, atraccionCultural, "T001"
+            Categoria.Familiar, false, atraccionCultural, "T001", null
         );
         
         assertFalse(tiquete.isFueUsado());
@@ -262,7 +262,7 @@ public class ReqFuncionales {
     @Test
     void testValidezTiquete() {
         TiqueteTemporada tiquete = new TiqueteTemporada(
-            Categoria.Oro, false, "Verano", "T002"
+            Categoria.Oro, false, "Verano", "T002", null
         );
         
         LocalDate hoy = LocalDate.now();
@@ -279,7 +279,7 @@ public class ReqFuncionales {
     @Test
     void testCompraTiqueteCliente() {
         TiqueteIndividual tiquete = new TiqueteIndividual(
-            Categoria.Familiar, false, atraccionCultural, "T001"
+            Categoria.Familiar, false, atraccionCultural, "T001", null
         );
         
         cliente.comprarTiquete(tiquete);

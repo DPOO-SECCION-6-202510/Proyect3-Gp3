@@ -6,8 +6,8 @@ public class FastPass extends Tiquete {
 	
 	private Date fecha;
 	
-	public FastPass(Categoria nivel, boolean fueUsado, Date fecha, String id) {
-		super(nivel, fueUsado, id);
+	public FastPass(Categoria nivel, boolean fueUsado, Date fecha, String id, String tipoTiquete) {
+		super(nivel, fueUsado, id, tipoTiquete);
 		this.fecha = fecha;
 	}
 	
