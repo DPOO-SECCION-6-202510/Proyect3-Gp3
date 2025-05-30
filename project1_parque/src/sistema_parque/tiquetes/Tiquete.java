@@ -9,9 +9,8 @@ public class Tiquete {
     protected Categoria nivel;
     private boolean fueUsado;
     private java.time.LocalDate fechaExpiracion;
-    // ¡¡¡CAMBIO CRÍTICO AQUÍ!!!
-    // Renombrar 'tipo' a 'tipoTiquete' para que coincida con el campo en el JSON
-    private String tipoTiquete; // <-- ¡Este es el cambio que necesitas aplicar!
+
+    private String tipo; // <-- ¡Este es el cambio que necesitas aplicar!
 
     private Atraccion atraccion;
 
@@ -21,25 +20,25 @@ public class Tiquete {
         this.nivel = nivel;
         this.fueUsado = fueUsado;
         this.id = id;
-        this.tipoTiquete = tipoTiquete; // ¡Asigna el valor al atributo renombrado!
+        this.tipo = tipoTiquete; // ¡Asigna el valor al atributo renombrado!
         // fechaExpiracion y atraccion permanecen null por defecto con este constructor
     }
 
     // Constructor por defecto
     public Tiquete() {
-        this.fueUsado = false;
+    	 super();
         // id, nivel, fechaExpiracion, atraccion, tipoTiquete permanecen null
     }
 
     // ¡¡¡CAMBIO CRÍTICO AQUÍ!!!
     // El getter ahora devuelve el atributo renombrado
     public String getTipo() {
-        return tipoTiquete; // <-- ¡Este es el cambio que necesitas aplicar!
+        return tipo; // <-- ¡Este es el cambio que necesitas aplicar!
     }
 
     // Si necesitas un setter para tipoTiquete (es buena práctica tenerlo)
     public void setTipoTiquete(String tipoTiquete) {
-        this.tipoTiquete = tipoTiquete;
+        this.tipo = tipoTiquete;
     }
     
     public Atraccion getAtraccion() {

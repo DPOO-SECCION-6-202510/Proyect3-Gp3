@@ -11,7 +11,6 @@ public class TiqueteTemporada extends Tiquete {
 	
 	public TiqueteTemporada() {
         super(); // Llama al constructor sin argumentos de la clase base Tiquete
-        this.setTipoTiquete("TEMPORADA"); // Asegura que el tipo se establezca para Gson
     }
 
 	public String getTipoTemporadaLapso() {
