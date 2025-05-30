@@ -10,7 +10,28 @@ import sistema_parque.tiquetes.Tiquete;
 public abstract class Usuario {
 
     private String nombre;
-    private String login; 
+    public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public void setContrasena(String contrasena) {
+		this.contrasena = contrasena;
+	}
+
+	public void setListaTiquetesNoUsados(List<Tiquete> listaTiquetesNoUsados) {
+		this.listaTiquetesNoUsados = listaTiquetesNoUsados;
+	}
+
+	public void setListaTiquetesUsados(List<Tiquete> listaTiquetesUsados) {
+		this.listaTiquetesUsados = listaTiquetesUsados;
+	}
+
+
+	private String login; 
     private String contrasena;
 
     protected List<Tiquete> listaTiquetesNoUsados;

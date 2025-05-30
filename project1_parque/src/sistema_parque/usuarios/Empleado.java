@@ -5,6 +5,26 @@ import java.util.ArrayList;
 public class Empleado extends Usuario {
 	
 	private String rol;
+	public void setRol(String rol) {
+		this.rol = rol;
+	}
+
+
+	public void setCapacitaciones(ArrayList<String> capacitaciones) {
+		this.capacitaciones = capacitaciones;
+	}
+
+
+	public void setTurnoDiurno(boolean turnoDiurno) {
+		this.turnoDiurno = turnoDiurno;
+	}
+
+
+	public void setTurnoNocturno(boolean turnoNocturno) {
+		this.turnoNocturno = turnoNocturno;
+	}
+
+
 	private ArrayList<String> capacitaciones;
 	private boolean turnoDiurno;
 	private boolean turnoNocturno;
