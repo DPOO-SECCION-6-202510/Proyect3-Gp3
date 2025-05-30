@@ -5,11 +5,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import sistema_parque.lugaresServicio.Taquilla;
 import sistema_parque.sisParque.PrincipalParque;
-import sistema_parque.tiquetes.Tiquete;
+import sistema_parque.tiquetes.*;
+import sistema_parque.usuarios.Cliente;
 import sistema_parque.usuarios.Usuario;
 
 public class ComprarTiquetesPanel extends JPanel {
@@ -18,8 +18,6 @@ public class ComprarTiquetesPanel extends JPanel {
     private Usuario cliente;
     private Taquilla taquilla;
 
-    private JComboBox<String> tipoComboBox;
-    private JButton buscarBtn;
     private JPanel panelResultados;
     private List<Tiquete> tiquetes;
 
@@ -36,17 +34,10 @@ public class ComprarTiquetesPanel extends JPanel {
 
         setLayout(new BorderLayout());
 
-        // Panel superior con selector de tipo
-        JPanel panelBusqueda = new JPanel(new FlowLayout());
-        panelBusqueda.add(new JLabel("Seleccione el tipo de tiquete:"));
-
-        tipoComboBox = new JComboBox<>(new String[]{"TEMPORADA", "INDIVIDUAL", "FASTPASS"});
-        panelBusqueda.add(tipoComboBox);
-
-        buscarBtn = new JButton("Buscar Tiquetes");
-        panelBusqueda.add(buscarBtn);
-
-        add(panelBusqueda, BorderLayout.NORTH);
+        JLabel titulo = new JLabel("🎟 Lista de tiquetes disponibles");
+        titulo.setFont(new Font("SansSerif", Font.BOLD, 16));
+        titulo.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        add(titulo, BorderLayout.NORTH);
 
         // Panel de resultados con scroll
         panelResultados = new JPanel();
@@ -55,34 +46,35 @@ public class ComprarTiquetesPanel extends JPanel {
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         add(scrollPane, BorderLayout.CENTER);
 
-        // Acción de búsqueda
-        buscarBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mostrarTiquetesFiltrados();
-            }
-        });
+        mostrarTodosLosTiquetes();
     }
 
-    private void mostrarTiquetesFiltrados() {
+    private void mostrarTodosLosTiquetes() {
         panelResultados.removeAll();
 
-        String tipoSeleccionado = (String) tipoComboBox.getSelectedItem();
-        List<Tiquete> tiquetesFiltrados = taquilla.getListaTiquetesVender().stream()
-                .filter(t -> t.getTipo().equalsIgnoreCase(tipoSeleccionado))
-                .collect(Collectors.toList());
+        List<Tiquete> disponibles = taquilla.getListaTiquetesVender();
 
-        if (tiquetesFiltrados.isEmpty()) {
-            panelResultados.add(new JLabel("No hay tiquetes disponibles de tipo: " + tipoSeleccionado));
+        if (disponibles.isEmpty()) {
+            panelResultados.add(new JLabel("No hay tiquetes disponibles en la taquilla."));
         } else {
-            for (Tiquete t : tiquetesFiltrados) {
-                JButton botonTiquete = new JButton("🎟 ID: " + t.getId() + " | Expira: " + t.getFechaExpiracion());
+            for (Tiquete t : disponibles) {
+                String tipo;
+                if (t instanceof TiqueteTemporada) {
+                    tipo = "TEMPORADA";
+                } else if (t instanceof FastPass) {
+                    tipo = "FASTPASS";
+                } else if (t instanceof TiqueteIndividual) {
+                    tipo = "INDIVIDUAL";
+                } else {
+                    tipo = "DESCONOCIDO";
+                }
+
+                JButton botonTiquete = new JButton("🎟 ID: " + t.getId() + " | Expira: " + t.getFechaExpiracion() + " | Tipo: " + tipo);
                 botonTiquete.setFont(new Font("SansSerif", Font.PLAIN, 14));
                 botonTiquete.setAlignmentX(Component.LEFT_ALIGNMENT);
                 botonTiquete.setBackground(new Color(230, 245, 255));
                 botonTiquete.setFocusPainted(false);
 
-                // Acción al hacer clic en el tiquete
                 botonTiquete.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -94,8 +86,8 @@ public class ComprarTiquetesPanel extends JPanel {
                         );
 
                         if (confirmacion == JOptionPane.YES_OPTION) {
-                            if (cliente instanceof sistema_parque.usuarios.Cliente) {
-                                sistema_parque.usuarios.Cliente clienteReal = (sistema_parque.usuarios.Cliente) cliente;
+                            if (cliente instanceof Cliente) {
+                                Cliente clienteReal = (Cliente) cliente;
 
                                 // Registrar la venta
                                 taquilla.registrarVenta(clienteReal, t);
@@ -111,9 +103,9 @@ public class ComprarTiquetesPanel extends JPanel {
                                         JOptionPane.INFORMATION_MESSAGE
                                 );
 
-                                // Refrescar interfaz
-                                tiquetes.remove(t);
-                                mostrarTiquetesFiltrados();
+                                // Refrescar la interfaz
+                                tiquetes.remove(t); // también lo eliminamos del parque
+                                mostrarTodosLosTiquetes();
                             } else {
                                 JOptionPane.showMessageDialog(
                                         ComprarTiquetesPanel.this,
