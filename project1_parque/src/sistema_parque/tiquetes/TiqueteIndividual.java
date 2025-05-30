@@ -12,8 +12,9 @@ public class TiqueteIndividual extends Tiquete {
     }
     
     
-    public TiqueteIndividual() {
-        super(); // Llama al constructor sin args de Tiquete
+    public TiqueteIndividual() { // Constructor sin argumentos para Gson
+        super();
+        this.setTipoTiquete("INDIVIDUAL"); // Si usas el constructor sin args, asegúrate de inicializarlo
     }
   
     @Override

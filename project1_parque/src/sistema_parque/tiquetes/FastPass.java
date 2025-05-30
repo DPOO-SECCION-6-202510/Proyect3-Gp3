@@ -12,7 +12,8 @@ public class FastPass extends Tiquete {
 	}
 	
 	public FastPass() {
-        super();
+        super(); // Llama al constructor sin argumentos de la clase base Tiquete
+        this.setTipoTiquete("FASTPASS"); // Asegura que el tipo se establezca para Gson
     }
 
 	public Date getFecha() {

@@ -6,31 +6,40 @@ import sistema_parque.atracciones.Atraccion; // Asegúrate que esta clase exista
 public class Tiquete {
 
     private String id;
-    protected Categoria nivel; // 'protected' para acceso desde el mismo paquete y subclases
+    protected Categoria nivel;
     private boolean fueUsado;
     private java.time.LocalDate fechaExpiracion;
-    private String tipo; 
+    // ¡¡¡CAMBIO CRÍTICO AQUÍ!!!
+    // Renombrar 'tipo' a 'tipoTiquete' para que coincida con el campo en el JSON
+    private String tipoTiquete; // <-- ¡Este es el cambio que necesitas aplicar!
 
     private Atraccion atraccion;
 
     // Constructor principal
     public Tiquete(Categoria nivel, boolean fueUsado, String id, String tipoTiquete) {
-    	super();
+        // super(); // No es necesario si no extiende de otra clase base que lo requiera.
         this.nivel = nivel;
         this.fueUsado = fueUsado;
         this.id = id;
-        this.tipo = tipoTiquete;
+        this.tipoTiquete = tipoTiquete; // ¡Asigna el valor al atributo renombrado!
         // fechaExpiracion y atraccion permanecen null por defecto con este constructor
     }
 
     // Constructor por defecto
     public Tiquete() {
         this.fueUsado = false;
-        // id, nivel, fechaExpiracion, atraccion permanecen null
+        // id, nivel, fechaExpiracion, atraccion, tipoTiquete permanecen null
     }
 
+    // ¡¡¡CAMBIO CRÍTICO AQUÍ!!!
+    // El getter ahora devuelve el atributo renombrado
     public String getTipo() {
-    	return tipo;
+        return tipoTiquete; // <-- ¡Este es el cambio que necesitas aplicar!
+    }
+
+    // Si necesitas un setter para tipoTiquete (es buena práctica tenerlo)
+    public void setTipoTiquete(String tipoTiquete) {
+        this.tipoTiquete = tipoTiquete;
     }
     
     public Atraccion getAtraccion() {
@@ -41,13 +50,16 @@ public class Tiquete {
         return fechaExpiracion;
     }
 
-    // Setter añadido para facilitar la prueba y el uso
     public void setFechaExpiracion(java.time.LocalDate fechaExpiracion) {
         this.fechaExpiracion = fechaExpiracion;
     }
 
     public Categoria getNivel() {
         return nivel;
+    }
+
+    public void setNivel(Categoria nivel) { // Agregado setter para nivel, si no lo tenías
+        this.nivel = nivel;
     }
 
     public boolean isFueUsado() {
@@ -58,15 +70,18 @@ public class Tiquete {
         return id;
     }
 
+    public void setId(String id) { // Agregado setter para id, si no lo tenías
+        this.id = id;
+    }
+
 
     public boolean esValidoParaUsar(LocalDate now) {
         if (this.fechaExpiracion == null) {
-            return false; // O lanzar una excepción si se prefiere: throw new IllegalStateException("Fecha de expiración no establecida.");
+            return false;
         }
-        return now.isBefore(this.fechaExpiracion);
+        return !fueUsado && now.isBefore(this.fechaExpiracion);
     }
 
-    // Protected: puede ser accedido por clases en el mismo paquete o subclases
     public void setAtraccion(Atraccion atraccion) {
         this.atraccion = atraccion;
     }
