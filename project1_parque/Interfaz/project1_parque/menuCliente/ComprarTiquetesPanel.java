@@ -21,16 +21,19 @@ public class ComprarTiquetesPanel extends JPanel {
     private JComboBox<String> tipoComboBox;
     private JButton buscarBtn;
     private JPanel panelResultados;
+    private List<Tiquete> tiquetes;
 
     public ComprarTiquetesPanel(PrincipalParque parquePrincipal, Usuario usuarioAutenticado) {
         this.parquePrincipal = parquePrincipal;
         this.cliente = usuarioAutenticado;
         this.taquilla = new Taquilla();
+        this.tiquetes = parquePrincipal.getListaTiquetes();
 
-        List<Tiquete> tiquetes = parquePrincipal.getListaTiquetes();
+        // Cargar tiquetes desde el parque a la taquilla
         for (Tiquete tiquete : tiquetes) {
-        	taquilla.getListaTiquetesVender().add(tiquete);
+            taquilla.getListaTiquetesVender().add(tiquete);
         }
+
         setLayout(new BorderLayout());
 
         // Panel superior con selector de tipo
@@ -73,14 +76,61 @@ public class ComprarTiquetesPanel extends JPanel {
             panelResultados.add(new JLabel("No hay tiquetes disponibles de tipo: " + tipoSeleccionado));
         } else {
             for (Tiquete t : tiquetesFiltrados) {
-                JLabel info = new JLabel("🎟 ID: " + t.getId() + " | Expira: " + t.getFechaExpiracion());
-                info.setFont(new Font("SansSerif", Font.PLAIN, 14));
-                info.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-                panelResultados.add(info);
+                JButton botonTiquete = new JButton("🎟 ID: " + t.getId() + " | Expira: " + t.getFechaExpiracion());
+                botonTiquete.setFont(new Font("SansSerif", Font.PLAIN, 14));
+                botonTiquete.setAlignmentX(Component.LEFT_ALIGNMENT);
+                botonTiquete.setBackground(new Color(230, 245, 255));
+                botonTiquete.setFocusPainted(false);
+
+                // Acción al hacer clic en el tiquete
+                botonTiquete.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        int confirmacion = JOptionPane.showConfirmDialog(
+                                ComprarTiquetesPanel.this,
+                                "¿Está seguro de que desea comprar este tiquete?",
+                                "Confirmar compra",
+                                JOptionPane.YES_NO_OPTION
+                        );
+
+                        if (confirmacion == JOptionPane.YES_OPTION) {
+                            if (cliente instanceof sistema_parque.usuarios.Cliente) {
+                                sistema_parque.usuarios.Cliente clienteReal = (sistema_parque.usuarios.Cliente) cliente;
+
+                                // Registrar la venta
+                                taquilla.registrarVenta(clienteReal, t);
+
+                                // Eliminar de la lista de venta
+                                taquilla.getListaTiquetesVender().remove(t);
+
+                                // Notificar éxito
+                                JOptionPane.showMessageDialog(
+                                        ComprarTiquetesPanel.this,
+                                        "✅ Tiquete añadido exitosamente.",
+                                        "Compra realizada",
+                                        JOptionPane.INFORMATION_MESSAGE
+                                );
+
+                                // Refrescar interfaz
+                                tiquetes.remove(t);
+                                mostrarTiquetesFiltrados();
+                            } else {
+                                JOptionPane.showMessageDialog(
+                                        ComprarTiquetesPanel.this,
+                                        "❌ Error: El usuario no es un cliente válido.",
+                                        "Error",
+                                        JOptionPane.ERROR_MESSAGE
+                                );
+                            }
+                        }
+                    }
+                });
+
+                panelResultados.add(botonTiquete);
+                panelResultados.add(Box.createVerticalStrut(5)); // Espacio entre botones
             }
         }
 
-        // Refrescar el panel
         panelResultados.revalidate();
         panelResultados.repaint();
     }

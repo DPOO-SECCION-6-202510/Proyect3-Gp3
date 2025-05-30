@@ -60,7 +60,7 @@ public class MenuClienteFrame extends JFrame {
         btnMisTiquetes.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mostrarPanel(new MisTiquetesPanel(parquePrincipal, nombreCliente));
+                mostrarPanel(new MisTiquetesPanel(parquePrincipal, usuarioAutenticado));
             }
         });
     }

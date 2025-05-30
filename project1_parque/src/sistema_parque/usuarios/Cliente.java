@@ -6,55 +6,51 @@ import sistema_parque.tiquetes.Tiquete;
 
 public class Cliente extends Usuario {
     private static final int COMPRA = 0;
-    private List<Tiquete> tiquetesNoUsados;
-    private List<Tiquete> tiquetesUsados;
 
     public Cliente(String nombre, String login, String contrasena) {
         super(nombre, login, contrasena);
-        this.tiquetesNoUsados = new ArrayList<>();
-        this.tiquetesUsados = new ArrayList<>();
     }
     
     // Método para comprar un tiquete
     public void comprarTiquete(Tiquete tiquete) {
         if (tiquete != null) {
-            tiquetesNoUsados.add(tiquete);
+            listaTiquetesNoUsados.add(tiquete);
         }
     }
     
     // Método para usar un tiquete
     public boolean usarTiquete(Tiquete tiquete) {
-        if (tiquetesNoUsados.contains(tiquete)) {
-            tiquetesNoUsados.remove(tiquete);
+        if (listaTiquetesNoUsados.contains(tiquete)) {
+        	listaTiquetesNoUsados.remove(tiquete);
             tiquete.marcarComoUsado();
-            tiquetesUsados.add(tiquete);
+            listaTiquetesUsados.add(tiquete);
         }
 		return false;
     }
     
     // Getters para los tiquetes
     public List<Tiquete> getTiquetesNoUsados() {
-        return new ArrayList<>(tiquetesNoUsados);
+        return new ArrayList<>(listaTiquetesNoUsados);
     }
     
     public List<Tiquete> getTiquetesUsados() {
-        return new ArrayList<>(tiquetesUsados);
+        return new ArrayList<>(listaTiquetesUsados);
     }
     
     // Método para mostrar tiquetes
     public void mostrarTiquetes() {
         System.out.println("=== Tiquetes No Usados ===");
-        if (tiquetesNoUsados.isEmpty()) {
+        if (listaTiquetesNoUsados.isEmpty()) {
             System.out.println("No hay tiquetes disponibles.");
         } else {
-            tiquetesNoUsados.forEach(System.out::println);
+        	listaTiquetesNoUsados.forEach(System.out::println);
         }
         
         System.out.println("\n=== Tiquetes Usados ===");
-        if (tiquetesUsados.isEmpty()) {
+        if (listaTiquetesUsados.isEmpty()) {
             System.out.println("No hay tiquetes usados.");
         } else {
-            tiquetesUsados.forEach(System.out::println);
+        	listaTiquetesUsados.forEach(System.out::println);
         }
     }
 	

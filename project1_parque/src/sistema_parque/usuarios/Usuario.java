@@ -13,8 +13,8 @@ public abstract class Usuario {
     private String login; 
     private String contrasena;
 
-    private List<Tiquete> listaTiquetesNoUsados;
-    private List<Tiquete> listaTiquetesUsados;
+    protected List<Tiquete> listaTiquetesNoUsados;
+    protected List<Tiquete> listaTiquetesUsados;
 
     
     public Usuario(String nombre, String login, String contrasena) {
