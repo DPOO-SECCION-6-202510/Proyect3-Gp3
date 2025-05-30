@@ -41,7 +41,7 @@ public class TiqueteIndividualTest {
                 120,
                 restriccionesSalud
         );
-        tiqueteIndividual = new TiqueteIndividual(Categoria.Familiar, false, atraccionMecanicaPrueba, "TI001", null);
+        tiqueteIndividual = new TiqueteIndividual(Categoria.Familiar, false, atraccionMecanicaPrueba, "TI001");
     }
 
     @AfterEach
@@ -77,7 +77,7 @@ public class TiqueteIndividualTest {
 
     @Test
     void testToStringSinAtraccionAsignada() {
-        TiqueteIndividual tiqueteSinAtraccion = new TiqueteIndividual(Categoria.Oro, true, null, "TI002", null);
+        TiqueteIndividual tiqueteSinAtraccion = new TiqueteIndividual(Categoria.Oro, true, null, "TI002");
         String expected = "TiqueteIndividual{id='TI002', nivel=Oro, fueUsado=true, atraccion='Ninguna', fechaExpiracion=" + tiqueteSinAtraccion.getFechaExpiracion() + '}';
         assertEquals(expected, tiqueteSinAtraccion.toString());
     }

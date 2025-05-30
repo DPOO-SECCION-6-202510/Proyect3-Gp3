@@ -5,8 +5,8 @@ import sistema_parque.atracciones.Atraccion;
 public class TiqueteIndividual extends Tiquete {
 	
 
-    public TiqueteIndividual(Categoria nivel, boolean fueUsado, Atraccion atraccion, String id, String tipoTiquete) {
-        super(nivel, fueUsado, id, tipoTiquete);
+    public TiqueteIndividual(Categoria nivel, boolean fueUsado, Atraccion atraccion, String id) {
+        super(nivel, fueUsado, id, "INIDIVUAL");
         
         setAtraccion(atraccion); 
     }

@@ -19,7 +19,7 @@ public class FastPassTest {
     @BeforeEach
     void setUp() throws Exception {
         fechaPrueba = new Date();
-        fastPass = new FastPass(Categoria.Familiar, false, fechaPrueba, "FP001", null);
+        fastPass = new FastPass(Categoria.Familiar, false, fechaPrueba, "FP001");
     }
 
     @AfterEach

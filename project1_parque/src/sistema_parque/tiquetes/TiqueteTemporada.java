@@ -4,8 +4,8 @@ public class TiqueteTemporada extends Tiquete {
 	
 	private String tipoTemporadaLapso;
 	
-	public TiqueteTemporada(Categoria nivel, boolean fueUsado, String tipoTemporadaLapso, String id, String tipoTiquete) {
-		super(nivel, fueUsado, id, tipoTiquete);
+	public TiqueteTemporada(Categoria nivel, boolean fueUsado, String tipoTemporadaLapso, String id) {
+		super(nivel, fueUsado, id, "TEMPORADA");
 		this.tipoTemporadaLapso = tipoTemporadaLapso;
 	}
 	
