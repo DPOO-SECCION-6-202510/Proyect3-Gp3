@@ -21,14 +21,15 @@ public class ComprarTiquetesPanel extends JPanel {
     private JComboBox<String> tipoComboBox;
     private JButton buscarBtn;
     private JPanel panelResultados;
+    private List<Tiquete> tiquetes;
 
     public ComprarTiquetesPanel(PrincipalParque parquePrincipal, Usuario usuarioAutenticado) {
         this.parquePrincipal = parquePrincipal;
         this.cliente = usuarioAutenticado;
         this.taquilla = new Taquilla();
+        this.tiquetes = parquePrincipal.getListaTiquetes();
 
         // Cargar tiquetes desde el parque a la taquilla
-        List<Tiquete> tiquetes = parquePrincipal.getListaTiquetes();
         for (Tiquete tiquete : tiquetes) {
             taquilla.getListaTiquetesVender().add(tiquete);
         }
@@ -111,6 +112,7 @@ public class ComprarTiquetesPanel extends JPanel {
                                 );
 
                                 // Refrescar interfaz
+                                tiquetes.remove(t);
                                 mostrarTiquetesFiltrados();
                             } else {
                                 JOptionPane.showMessageDialog(
