@@ -217,7 +217,270 @@ public class MenuEmpleadoFrame extends JFrame {
     }
     
     private void verInformacionEmpleado() {
-        // TODO: Implementar ver información del empleado
+        // Buscar el empleado por nombre usando el método que creamos anteriormente
+        Empleado empleadoActual = parquePrincipal.buscarEmpleadoPorNombre(nombreEmpleado);
+        
+        if (empleadoActual != null) {
+            // Crear y mostrar la ventana con la información del empleado
+            new InformacionEmpleadoFrame(empleadoActual).setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this,
+                "No se pudo encontrar la información del empleado: " + nombreEmpleado,
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    class InformacionEmpleadoFrame extends JFrame {
+        private Empleado empleado;
+        
+        public InformacionEmpleadoFrame(Empleado empleado) {
+            this.empleado = empleado;
+            configurarVentana();
+            crearInterfaz();
+        }
+        
+        private void configurarVentana() {
+            setTitle("Información del Empleado - " + empleado.getNombre());
+            setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            setSize(500, 600);
+            setLocationRelativeTo(null);
+            setResizable(false);
+            getContentPane().setBackground(new Color(240, 248, 255));
+        }
+        
+        private void crearInterfaz() {
+            setLayout(new BorderLayout());
+            
+            // Panel principal
+            JPanel panelPrincipal = new JPanel();
+            panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
+            panelPrincipal.setBackground(new Color(240, 248, 255));
+            panelPrincipal.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+            
+            // Título
+            crearTitulo(panelPrincipal);
+            
+            // Información personal
+            crearSeccionInformacionPersonal(panelPrincipal);
+            
+            // Información laboral
+            crearSeccionInformacionLaboral(panelPrincipal);
+            
+            // Capacitaciones
+            crearSeccionCapacitaciones(panelPrincipal);
+            
+            // Turnos
+            crearSeccionTurnos(panelPrincipal);
+            
+            // Beneficios
+            crearSeccionBeneficios(panelPrincipal);
+            
+            add(panelPrincipal, BorderLayout.CENTER);
+            
+            // Panel inferior con botón cerrar
+            crearPanelInferior();
+        }
+        
+        private void crearTitulo(JPanel panel) {
+            JLabel titulo = new JLabel("INFORMACIÓN DEL EMPLEADO");
+            titulo.setFont(new Font("Arial", Font.BOLD, 18));
+            titulo.setForeground(new Color(70, 130, 180));
+            titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
+            titulo.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
+            
+            panel.add(titulo);
+        }
+        
+        private void crearSeccionInformacionPersonal(JPanel panel) {
+            // Título de sección
+            JLabel tituloSeccion = new JLabel("INFORMACIÓN PERSONAL");
+            tituloSeccion.setFont(new Font("Arial", Font.BOLD, 14));
+            tituloSeccion.setForeground(new Color(70, 130, 180));
+            tituloSeccion.setAlignmentX(Component.LEFT_ALIGNMENT);
+            panel.add(tituloSeccion);
+            
+            panel.add(Box.createVerticalStrut(10));
+            
+            // Panel con fondo para la información
+            JPanel infoPanel = new JPanel();
+            infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+            infoPanel.setBackground(Color.WHITE);
+            infoPanel.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(200, 200, 200), 1),
+                BorderFactory.createEmptyBorder(15, 15, 15, 15)
+            ));
+            
+            // Información del empleado
+            agregarCampoInfo(infoPanel, "Nombre completo:", empleado.getNombre());
+            agregarCampoInfo(infoPanel, "Usuario:", empleado.getLogin());
+            agregarCampoInfo(infoPanel, "Contraseña:", empleado.getContrasena());
+            
+            panel.add(infoPanel);
+            panel.add(Box.createVerticalStrut(15));
+        }
+        
+        private void crearSeccionInformacionLaboral(JPanel panel) {
+            JLabel tituloSeccion = new JLabel("INFORMACIÓN LABORAL");
+            tituloSeccion.setFont(new Font("Arial", Font.BOLD, 14));
+            tituloSeccion.setForeground(new Color(70, 130, 180));
+            tituloSeccion.setAlignmentX(Component.LEFT_ALIGNMENT);
+            panel.add(tituloSeccion);
+            
+            panel.add(Box.createVerticalStrut(10));
+            
+            JPanel infoPanel = new JPanel();
+            infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+            infoPanel.setBackground(Color.WHITE);
+            infoPanel.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(200, 200, 200), 1),
+                BorderFactory.createEmptyBorder(15, 15, 15, 15)
+            ));
+            
+            agregarCampoInfo(infoPanel, "Rol:", empleado.getRol());
+            
+            panel.add(infoPanel);
+            panel.add(Box.createVerticalStrut(15));
+        }
+        
+        private void crearSeccionCapacitaciones(JPanel panel) {
+            JLabel tituloSeccion = new JLabel("CAPACITACIONES");
+            tituloSeccion.setFont(new Font("Arial", Font.BOLD, 14));
+            tituloSeccion.setForeground(new Color(70, 130, 180));
+            tituloSeccion.setAlignmentX(Component.LEFT_ALIGNMENT);
+            panel.add(tituloSeccion);
+            
+            panel.add(Box.createVerticalStrut(10));
+            
+            JPanel infoPanel = new JPanel();
+            infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+            infoPanel.setBackground(Color.WHITE);
+            infoPanel.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(200, 200, 200), 1),
+                BorderFactory.createEmptyBorder(15, 15, 15, 15)
+            ));
+            
+            if (empleado.getCapacitaciones().isEmpty()) {
+                JLabel sinCapacitaciones = new JLabel("• No tiene capacitaciones registradas");
+                sinCapacitaciones.setFont(new Font("Arial", Font.ITALIC, 12));
+                sinCapacitaciones.setForeground(Color.GRAY);
+                sinCapacitaciones.setAlignmentX(Component.LEFT_ALIGNMENT);
+                infoPanel.add(sinCapacitaciones);
+            } else {
+                for (String capacitacion : empleado.getCapacitaciones()) {
+                    JLabel labelCapacitacion = new JLabel("• " + capacitacion);
+                    labelCapacitacion.setFont(new Font("Arial", Font.PLAIN, 12));
+                    labelCapacitacion.setAlignmentX(Component.LEFT_ALIGNMENT);
+                    infoPanel.add(labelCapacitacion);
+                    infoPanel.add(Box.createVerticalStrut(5));
+                }
+            }
+            
+            panel.add(infoPanel);
+            panel.add(Box.createVerticalStrut(15));
+        }
+        
+        private void crearSeccionTurnos(JPanel panel) {
+            JLabel tituloSeccion = new JLabel("HORARIOS DE TRABAJO");
+            tituloSeccion.setFont(new Font("Arial", Font.BOLD, 14));
+            tituloSeccion.setForeground(new Color(70, 130, 180));
+            tituloSeccion.setAlignmentX(Component.LEFT_ALIGNMENT);
+            panel.add(tituloSeccion);
+            
+            panel.add(Box.createVerticalStrut(10));
+            
+            JPanel infoPanel = new JPanel();
+            infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+            infoPanel.setBackground(Color.WHITE);
+            infoPanel.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(200, 200, 200), 1),
+                BorderFactory.createEmptyBorder(15, 15, 15, 15)
+            ));
+            
+            // Mostrar turnos disponibles
+            StringBuilder turnos = new StringBuilder();
+            if (empleado.isTurnoDiurno() && empleado.isTurnoNocturno()) {
+                turnos.append("Disponible para turnos diurnos y nocturnos");
+            } else if (empleado.isTurnoDiurno()) {
+                turnos.append("Disponible solo para turnos diurnos");
+            } else if (empleado.isTurnoNocturno()) {
+                turnos.append("Disponible solo para turnos nocturnos");
+            } else {
+                turnos.append("Sin turnos asignados");
+            }
+            
+            JLabel labelTurnos = new JLabel("• " + turnos.toString());
+            labelTurnos.setFont(new Font("Arial", Font.PLAIN, 12));
+            labelTurnos.setAlignmentX(Component.LEFT_ALIGNMENT);
+            infoPanel.add(labelTurnos);
+            
+            panel.add(infoPanel);
+            panel.add(Box.createVerticalStrut(15));
+        }
+        
+        private void crearSeccionBeneficios(JPanel panel) {
+            JLabel tituloSeccion = new JLabel("BENEFICIOS");
+            tituloSeccion.setFont(new Font("Arial", Font.BOLD, 14));
+            tituloSeccion.setForeground(new Color(70, 130, 180));
+            tituloSeccion.setAlignmentX(Component.LEFT_ALIGNMENT);
+            panel.add(tituloSeccion);
+            
+            panel.add(Box.createVerticalStrut(10));
+            
+            JPanel infoPanel = new JPanel();
+            infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+            infoPanel.setBackground(Color.WHITE);
+            infoPanel.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(200, 200, 200), 1),
+                BorderFactory.createEmptyBorder(15, 15, 15, 15)
+            ));
+            
+            String descuento = "Descuento en compras: " + Empleado.getDESCUENTOCOMPRA() + "%";
+            JLabel labelDescuento = new JLabel("• " + descuento);
+            labelDescuento.setFont(new Font("Arial", Font.PLAIN, 12));
+            labelDescuento.setAlignmentX(Component.LEFT_ALIGNMENT);
+            infoPanel.add(labelDescuento);
+            
+            panel.add(infoPanel);
+        }
+        
+        private void agregarCampoInfo(JPanel panel, String label, String valor) {
+            JPanel campoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+            campoPanel.setBackground(Color.WHITE);
+            
+            JLabel labelCampo = new JLabel(label);
+            labelCampo.setFont(new Font("Arial", Font.BOLD, 12));
+            labelCampo.setPreferredSize(new Dimension(120, 20));
+            
+            JLabel valorCampo = new JLabel(valor != null ? valor : "No especificado");
+            valorCampo.setFont(new Font("Arial", Font.PLAIN, 12));
+            
+            campoPanel.add(labelCampo);
+            campoPanel.add(valorCampo);
+            
+            panel.add(campoPanel);
+            panel.add(Box.createVerticalStrut(8));
+        }
+        
+        private void crearPanelInferior() {
+            JPanel panelInferior = new JPanel();
+            panelInferior.setBackground(new Color(240, 248, 255));
+            panelInferior.setLayout(new FlowLayout(FlowLayout.CENTER));
+            panelInferior.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            
+            JButton btnCerrar = new JButton("Cerrar");
+            btnCerrar.setPreferredSize(new Dimension(100, 35));
+            btnCerrar.setFont(new Font("Arial", Font.BOLD, 12));
+            btnCerrar.setBackground(new Color(70, 130, 180));
+            btnCerrar.setForeground(Color.GRAY);
+            btnCerrar.setBorder(BorderFactory.createEmptyBorder());
+            btnCerrar.setFocusPainted(false);
+            
+            btnCerrar.addActionListener(e -> dispose());
+            
+            panelInferior.add(btnCerrar);
+            add(panelInferior, BorderLayout.SOUTH);
+        }
     }
     
     private void cerrarSesion() {
@@ -233,13 +496,11 @@ public class MenuEmpleadoFrame extends JFrame {
         }
     }
     
-    // Método para mostrar la ventana
     public void mostrarMenu() {
         setVisible(true);
     }
 }
 
-// Clase para la ventana del catálogo de atracciones
 class CatalogoAtraccionesFrame extends JFrame {
     private PrincipalParque parquePrincipal;
     private ArrayList<Atraccion> atracciones;

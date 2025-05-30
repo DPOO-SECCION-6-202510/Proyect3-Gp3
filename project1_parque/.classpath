@@ -13,12 +13,12 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="tests"/>
 	<classpathentry kind="src" path="Interfaz"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/felpr/OneDrive/Escritorio/core-3.5.3.jar">
+	<classpathentry kind="lib" path="C:/Users/user/Documents/Universidad de los Andes/MATERIAS/2025-10/DPOO/Librerias/core-3.5.3.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="C:/Users/felpr/OneDrive/Escritorio/gson-2.10.1.jar">
+	<classpathentry kind="lib" path="C:/Users/user/Documents/Universidad de los Andes/MATERIAS/2025-10/DPOO/Librerias/gson-2.10.1.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>

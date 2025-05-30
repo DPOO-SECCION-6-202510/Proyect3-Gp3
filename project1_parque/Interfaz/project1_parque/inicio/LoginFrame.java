@@ -55,7 +55,7 @@ public class LoginFrame extends JFrame { // No es necesario implements ActionLis
         JLabel etiquetaPassword = new JLabel("Contraseña:");
         campoPassword = new JPasswordField(15); // Un poco más grande
         botonLogin = new JButton("Ingresar");
-        botonCancelar = new JButton("Cancelar");
+        botonCancelar = new JButton("Salir");
         JLabel Note_registro = new JLabel("¿No tiene cuenta?, Registrese aquí");
 
         // Opcional: Establecer tamaño preferido para los campos para un control más fino

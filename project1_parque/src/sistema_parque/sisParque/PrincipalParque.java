@@ -51,7 +51,16 @@ public class PrincipalParque {
          // listaUsuarios, quizás podrías filtrarla en lugar de tener una lista separada.
         return listaEmpleados;
     }
-
+    
+    public Empleado buscarEmpleadoPorNombre(String nombre) {
+        for (Empleado empleado : listaEmpleados) {
+            if (empleado.getNombre().equalsIgnoreCase(nombre)) {
+                return empleado;
+            }
+        }
+        return null;
+    }
+    
     public List<LugarServicio> getListaLugaresServicio() {
         // return Collections.unmodifiableList(listaLugaresServicio);
         return listaLugaresServicio;
@@ -464,3 +473,4 @@ public class PrincipalParque {
 		return null;
 	}	
 }
+
