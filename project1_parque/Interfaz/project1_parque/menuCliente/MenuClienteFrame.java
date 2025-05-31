@@ -3,6 +3,9 @@ package project1_parque.menuCliente;
 import sistema_parque.sisParque.PrincipalParque;
 import sistema_parque.usuarios.Usuario;
 import javax.swing.*;
+
+import project1_parque.inicio.LoginFrame;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -47,7 +50,7 @@ public class MenuClienteFrame extends JFrame {
         };
         panelPrincipal.setOpaque(false);
 
-        // Panel de botones
+        // Panel de botones principales
         JPanel panelBotones = new JPanel();
         panelBotones.setOpaque(false);
         panelBotones.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 20));
@@ -72,9 +75,20 @@ public class MenuClienteFrame extends JFrame {
         panelContenido = new JPanel(new BorderLayout());
         panelContenido.setOpaque(false);
 
+        // Panel inferior para el botón de cerrar sesión
+        JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        panelInferior.setOpaque(false);
+        panelInferior.setBorder(BorderFactory.createEmptyBorder(10, 0, 20, 0));
+
+        // Botón de cerrar sesión
+        JButton btnCerrarSesion = crearBotonCerrarSesion("Cerrar Sesión");
+        btnCerrarSesion.setPreferredSize(new Dimension(160, 40));
+        panelInferior.add(btnCerrarSesion);
+
         // Añadir componentes al panel principal
         panelPrincipal.add(panelBotones, BorderLayout.NORTH);
         panelPrincipal.add(panelContenido, BorderLayout.CENTER);
+        panelPrincipal.add(panelInferior, BorderLayout.SOUTH);
 
         // Añadir panel principal al frame
         add(panelPrincipal);
@@ -83,6 +97,9 @@ public class MenuClienteFrame extends JFrame {
         btnAtracciones.addActionListener(e -> mostrarPanel(new AtraccionesPanel(parquePrincipal)));
         btnComprar.addActionListener(e -> mostrarPanel(new ComprarTiquetesPanel(parquePrincipal, usuarioAutenticado)));
         btnMisTiquetes.addActionListener(e -> mostrarPanel(new MisTiquetesPanel(parquePrincipal, usuarioAutenticado)));
+
+        // Acción del botón cerrar sesión
+        btnCerrarSesion.addActionListener(e -> cerrarSesion());
     }
 
     private JButton crearBotonConHover(String texto) {
@@ -117,6 +134,62 @@ public class MenuClienteFrame extends JFrame {
         });
 
         return boton;
+    }
+
+    private JButton crearBotonCerrarSesion(String texto) {
+        JButton boton = new JButton(texto);
+        
+        // Estilo del botón de cerrar sesión (color rojo)
+        boton.setFont(new Font("Arial", Font.BOLD, 14));
+        boton.setForeground(new Color(240, 240, 240)); // Texto casi blanco
+        boton.setBackground(new Color(180, 70, 70, 150)); // Fondo rojo semi-transparente
+        boton.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(255, 255, 255, 100), 2),
+            BorderFactory.createEmptyBorder(5, 15, 5, 15)
+        ));
+        boton.setFocusPainted(false);
+        boton.setContentAreaFilled(false);
+        boton.setOpaque(true);
+        boton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+        // Efecto hover para botón de cerrar sesión
+        boton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                boton.setForeground(new Color(200, 200, 200)); // Texto más oscuro
+                boton.setBackground(new Color(150, 50, 50, 180)); // Fondo rojo más oscuro
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                boton.setForeground(new Color(240, 240, 240)); // Texto original
+                boton.setBackground(new Color(180, 70, 70, 150)); // Fondo rojo original
+            }
+        });
+
+        return boton;
+    }
+
+    private void cerrarSesion() {
+        int opcion = JOptionPane.showConfirmDialog(
+            this,
+            "¿Está seguro que desea cerrar la sesión?",
+            "Confirmar Cierre de Sesión",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE
+        );
+        
+        if (opcion == JOptionPane.YES_OPTION) {
+            // Cerrar la ventana actual
+        	new LoginFrame().setVisible(true);
+            this.dispose();
+            
+            // Aquí puedes agregar la lógica para volver a la pantalla de login
+            // Por ejemplo:
+            // new LoginFrame().setVisible(true);
+            // O si tienes una referencia al frame principal:
+            // parquePrincipal.mostrarLogin();
+        }
     }
 
     private void mostrarPanel(JPanel nuevoPanel) {

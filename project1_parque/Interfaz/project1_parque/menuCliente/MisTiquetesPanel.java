@@ -24,13 +24,25 @@ public class MisTiquetesPanel extends JPanel {
         setLayout(new BorderLayout());
         setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
-        // Título con estilo mejorado
+        // Panel contenedor del título con recuadro azul
+        JPanel panelTitulo = new JPanel();
+        panelTitulo.setOpaque(false);
+        panelTitulo.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 10));
+
+        // Título con recuadro azul
         JLabel titulo = new JLabel("🎟 Mis Tiquetes No Usados");
         titulo.setFont(new Font("Arial", Font.BOLD, 18));
         titulo.setForeground(Color.WHITE);
-        titulo.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 10));
+        titulo.setOpaque(true);
+        titulo.setBackground(new Color(70, 130, 180, 180)); // Fondo azul semi-transparente
+        titulo.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(255, 255, 255, 150), 2),
+            BorderFactory.createEmptyBorder(12, 20, 12, 20)
+        ));
         titulo.setHorizontalAlignment(SwingConstants.CENTER);
-        add(titulo, BorderLayout.NORTH);
+
+        panelTitulo.add(titulo);
+        add(panelTitulo, BorderLayout.NORTH);
 
         // Panel de tiquetes con scroll - transparente
         JPanel panelTiquetes = new JPanel();
@@ -57,11 +69,25 @@ public class MisTiquetesPanel extends JPanel {
             List<Tiquete> tiquetes = ((Cliente) cliente).getListaTiquetesNoUsados();
 
             if (tiquetes.isEmpty()) {
+                // Panel para el mensaje de "no hay tiquetes" con recuadro
+                JPanel panelMensaje = new JPanel();
+                panelMensaje.setOpaque(false);
+                panelMensaje.setLayout(new FlowLayout(FlowLayout.CENTER));
+                panelMensaje.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
+
                 JLabel mensaje = new JLabel("No tienes tiquetes no usados.");
                 mensaje.setFont(new Font("Arial", Font.PLAIN, 14));
                 mensaje.setForeground(Color.WHITE);
-                mensaje.setAlignmentX(Component.CENTER_ALIGNMENT);
-                panelTiquetes.add(mensaje);
+                mensaje.setOpaque(true);
+                mensaje.setBackground(new Color(70, 130, 180, 120));
+                mensaje.setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createLineBorder(new Color(255, 255, 255, 100), 1),
+                    BorderFactory.createEmptyBorder(10, 15, 10, 15)
+                ));
+                mensaje.setHorizontalAlignment(SwingConstants.CENTER);
+
+                panelMensaje.add(mensaje);
+                panelTiquetes.add(panelMensaje);
             } else {
                 for (Tiquete t : tiquetes) {
                     JButton botonTiquete = crearBotonTiquete(t);
@@ -70,11 +96,25 @@ public class MisTiquetesPanel extends JPanel {
                 }
             }
         } else {
+            // Panel para mensaje de error con recuadro
+            JPanel panelError = new JPanel();
+            panelError.setOpaque(false);
+            panelError.setLayout(new FlowLayout(FlowLayout.CENTER));
+            panelError.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
+
             JLabel errorLabel = new JLabel("❌ Este usuario no es un cliente válido.");
             errorLabel.setFont(new Font("Arial", Font.BOLD, 14));
-            errorLabel.setForeground(new Color(255, 100, 100));
-            errorLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-            panelTiquetes.add(errorLabel);
+            errorLabel.setForeground(Color.WHITE);
+            errorLabel.setOpaque(true);
+            errorLabel.setBackground(new Color(180, 70, 70, 150)); // Fondo rojo para error
+            errorLabel.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(255, 255, 255, 150), 1),
+                BorderFactory.createEmptyBorder(10, 15, 10, 15)
+            ));
+            errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+            panelError.add(errorLabel);
+            panelTiquetes.add(panelError);
         }
 
         revalidate();
