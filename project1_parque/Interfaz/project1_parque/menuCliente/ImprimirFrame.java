@@ -64,7 +64,6 @@ public class ImprimirFrame extends JFrame {
 
         // Información del tiquete
         panelContenido.add(crearLineaInfo("No.", tiquete.getId()));
-        panelContenido.add(crearLineaInfo("Término", "CARMANTE")); // Ejemplo, ajustar según necesidad
         panelContenido.add(crearLineaInfo("Fecha Expedición", fechaImpresion));
         panelContenido.add(crearLineaInfo("Válido hasta", tiquete.getFechaExpiracion().toString()));
         panelContenido.add(crearLineaInfo("Tipo", tipoTiquete));
