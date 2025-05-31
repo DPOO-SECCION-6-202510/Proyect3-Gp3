@@ -9,6 +9,7 @@ public class Tiquete {
     protected Categoria nivel;
     private boolean fueUsado;
     private java.time.LocalDate fechaExpiracion;
+    private boolean impreso;
 
     private String tipo; // <-- ¡Este es el cambio que necesitas aplicar!
 
@@ -21,6 +22,7 @@ public class Tiquete {
         this.fueUsado = fueUsado;
         this.id = id;
         this.tipo = tipoTiquete; // ¡Asigna el valor al atributo renombrado!
+        this.impreso = false;
         // fechaExpiracion y atraccion permanecen null por defecto con este constructor
     }
 
@@ -88,4 +90,12 @@ public class Tiquete {
     public void marcarComoUsado() {
         this.fueUsado = true;
     }
+
+	public boolean isImpreso() {
+		return impreso;
+	}
+
+	public void marcarComoImpreso() {
+		this.impreso = true;		
+	}
 }
