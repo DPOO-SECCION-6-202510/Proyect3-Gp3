@@ -192,13 +192,7 @@ public class MenuEmpleadoFrame extends JFrame {
     
     // Métodos para manejar las acciones de los botones
     private void verMisTurnos() {
-        JOptionPane.showMessageDialog(this, 
-            "Funcionalidad: Ver mis turnos\n\nAquí se mostrarían los turnos asignados al empleado: " + nombreEmpleado,
-            "Ver Turnos", 
-            JOptionPane.INFORMATION_MESSAGE);
-        
-        // TODO: Implementar la lógica para mostrar los turnos del empleado
-        // Ejemplo: new VerTurnosFrame(nombreEmpleado, parquePrincipal).setVisible(true);
+    	new TurnosPanel(nombreEmpleado, parquePrincipal).setVisible(true);
     }
     
     private void gestionarAtraccionAsignada() {
